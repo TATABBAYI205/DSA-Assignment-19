@@ -1,0 +1,33 @@
+package Assignment19;
+
+public class MoveAllZeros 
+{
+    public static void pushZerosToEnd(int[] arr) 
+    {
+        int n = arr.length;
+        int left = 0; 
+        for (int i = 0; i < n; i++) 
+        {
+            if (arr[i] != 0)
+            {
+                arr[left] = arr[i];
+                left++;
+            }
+        }
+        while (left < n) 
+        {
+            arr[left] = 0;
+            left++;
+        }
+    }
+    public static void main(String[] args) 
+    {
+        int[] arr = {1, 2, 0, 4, 3, 0, 5, 0};
+        pushZerosToEnd(arr);
+        for (int num : arr) 
+        {
+            System.out.print(num + ", ");
+        }
+    }
+}
+

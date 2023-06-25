@@ -1,0 +1,88 @@
+package Assignment19;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CountOfSmallerNumber 
+{
+    private static class NumberIndex 
+    {
+        int number;
+        int index;
+        NumberIndex(int number, int index) 
+        {
+            this.number = number;
+            this.index = index;
+        }
+    }
+    public static List<Integer> countSmaller(int[] nums) 
+    {
+        if (nums == null || nums.length == 0) 
+        {
+            return new ArrayList<>();
+        }
+        int[] counts = new int[nums.length];
+        NumberIndex[] numberIndices = new NumberIndex[nums.length];
+        NumberIndex[] temp = new NumberIndex[nums.length];
+        for (int i = 0; i < nums.length; i++) 
+        {
+            numberIndices[i] = new NumberIndex(nums[i], i);
+        }
+        mergeSort(numberIndices, temp, counts, 0, nums.length - 1);
+        List<Integer> result = new ArrayList<>();
+        for (int count : counts) 
+        {
+            result.add(count);
+        }
+        return result;
+    }
+    private static void mergeSort(NumberIndex[] numberIndices, NumberIndex[] temp, int[] counts, int left, int right) 
+    {
+        if (left >= right) 
+        {
+            return;
+        }
+        int mid = left + (right - left) / 2;
+        mergeSort(numberIndices, temp, counts, left, mid);
+        mergeSort(numberIndices, temp, counts, mid + 1, right);
+        merge(numberIndices, temp, counts, left, mid, right);
+    }
+    private static void merge(NumberIndex[] numberIndices, NumberIndex[] temp, int[] counts, int left, int mid, int right) 
+    {
+        int i = left;
+        int j = mid + 1;
+        int k = left;
+        int smallerCount = 0;
+        while (i <= mid && j <= right) 
+        {
+            if (numberIndices[i].number <= numberIndices[j].number) {
+                counts[numberIndices[i].index] += smallerCount;
+                temp[k++] = numberIndices[i++];
+            }
+            else
+            {
+                smallerCount++;
+                temp[k++] = numberIndices[j++];
+            }
+        }
+        while (i <= mid) 
+        {
+            counts[numberIndices[i].index] += smallerCount;
+            temp[k++] = numberIndices[i++];
+        }
+        while (j <= right) 
+        {
+            temp[k++] = numberIndices[j++];
+        }
+        System.arraycopy(temp, left, numberIndices, left, right - left + 1);
+    }
+    public static void main(String[] args) 
+    {
+        int[] nums = {5, 2, 6, 1};
+        List<Integer> result = countSmaller(nums);
+        System.out.println(result);
+    }
+}
+
+
+

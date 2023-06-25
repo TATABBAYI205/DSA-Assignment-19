@@ -1,0 +1,34 @@
+package Assignment19;
+
+public class RearrangeArray 
+{
+    public static void alternateArrange(int[] arr) 
+    {
+        int n = arr.length;
+        int posIndex = 0; 
+        while (posIndex < n && arr[posIndex] < 0) 
+        {
+            posIndex++;
+        }
+        int negIndex = 1;
+        while (posIndex < n && negIndex <n) 
+        {
+            int temp = arr[posIndex];
+            arr[posIndex] = arr[negIndex];
+            arr[negIndex] = temp;
+            posIndex += 2;
+            negIndex += 2;
+        }
+    }
+    public static void main(String[] args)
+    {
+        int[] arr = {1, 2, 3, -4, -1, 4};
+        alternateArrange(arr);
+        for (int num : arr) 
+        {
+            System.out.print(num + " ");
+        }
+    }
+}
+
+

@@ -1,0 +1,44 @@
+package Assignment19;
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+public class IntersectionOfTwoArrays2 
+{
+    public static int[] intersect(int[] nums1, int[] nums2) 
+    {
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums1) 
+        {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+        List<Integer> intersectionList = new ArrayList<>();
+        for (int num : nums2) 
+        {
+            if (frequencyMap.containsKey(num) && frequencyMap.get(num) > 0)
+            {
+                intersectionList.add(num);
+                frequencyMap.put(num, frequencyMap.get(num) - 1);
+            }
+        }
+        int[] result = new int[intersectionList.size()];
+        int index = 0;
+        for (int num : intersectionList) 
+        {
+            result[index++] = num;
+        }
+        return result;
+    }
+    public static void main(String[] args)
+    {
+        int[] nums1 = {1, 2, 2, 1};
+        int[] nums2 = {2, 2};
+        int[] intersectionArray = intersect(nums1, nums2);
+        for (int num : intersectionArray) 
+        {
+            System.out.print(num + ", ");
+        }
+    }
+}
+
